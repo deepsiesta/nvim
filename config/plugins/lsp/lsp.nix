@@ -3,6 +3,45 @@
     virtual_text = true;
   };
 
+  clipboard = {
+    register = "unnamedplus";
+    providers = {
+      wl-copy.enable = true;
+      xsel.enable = true;
+    };
+  };
+
+  autoGroups = {
+    "kickstart-lsp-attach" = {
+      clear = true;
+    };
+  };
+
+  autoCmd = [
+    {
+      event = ["CursorHold" "CursorHoldI"];
+      group = "kickstart-lsp-attach";
+      callback.__raw =
+        # Lua
+        ''
+          function()
+            vim.lsp.buf.document_highlight()
+          end
+        '';
+    }
+    {
+      event = ["CursorMoved" "CursorMovedI"];
+      group = "kickstart-lsp-attach";
+      callback.__raw =
+        # Lua
+        ''
+          function()
+            vim.lsp.buf.clear_references()
+          end
+        '';
+    }
+  ];
+
   plugins.lsp = {
     enable = true;
     inlayHints = true;
@@ -28,78 +67,20 @@
       };
     };
 
-    onAttach = ''
-      local map = function(keys, func, desc)
-        vim.keymap.set('n', keys, func, { buffer = bufnr, desc = 'LSP: ' .. desc })
-      end
-
-      if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
-        local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
-        vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
-          buffer = bufnr,
-          group = highlight_augroup,
-          callback = vim.lsp.buf.document_highlight,
-        })
-
-        vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
-          buffer = bufnr,
-          group = highlight_augroup,
-          callback = vim.lsp.buf.clear_references,
-        })
-
-        vim.api.nvim_create_autocmd('LspDetach', {
-          group = vim.api.nvim_create_augroup('kickstart-lsp-detach', { clear = true }),
-          callback = function(event2)
-            vim.lsp.buf.clear_references()
-            vim.api.nvim_clear_autocmds { group = 'kickstart-lsp-highlight', buffer = event2.buf }
-          end,
-        })
-      end
-
-      if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
-        map('<leader>th', function()
-          vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = bufnr })
-        end, '[T]oggle Inlay [H]ints')
-      end
-    '';
-
     keymaps = {
       diagnostic = {
-        "<leader>cd" = {
-          action = "open_float";
-          desc = "Line Diagnostics";
-        };
-        "]d" = {
-          action = "goto_next";
-          desc = "Next Diagnostic";
-        };
-        "[d" = {
-          action = "goto_prev";
-          desc = "Prev Diagnostic";
-        };
+        "<leader>cd" = "open_float";
+        "]d" = "goto_next";
+        "[d" = "goto_prev";
       };
 
       lspBuf = {
-        "<leader>ca" = {
-          action = "code_action";
-          desc = "Code Action";
-        };
-        "<leader>cr" = {
-          action = "rename";
-          desc = "Rename";
-        };
-        "K" = {
-          action = "hover";
-          desc = "Hover";
-        };
-        "gD" = {
-          action = "declaration";
-          desc = "Goto Declaration";
-        };
-        "gK" = {
-          action = "signature_help";
-          desc = "Signature Help";
-        };
+        "<leader>ca" = "code_action";
+        "<leader>cr" = "rename";
+        "K" = "hover";
+        "gD" = "declaration";
+        "gK" = "signature_help";
+        "gI" = "implementation";
       };
 
       extra = [
@@ -112,38 +93,38 @@
         {
           mode = "n";
           key = "gd";
-          action.__raw = "function() Snacks.picker.lsp_definitions() end";
+          action = "<cmd>lua Snacks.picker.lsp_definitions()<CR>";
           options.desc = "Goto Definition";
         }
         {
           mode = "n";
           key = "gr";
-          action.__raw = "function() Snacks.picker.lsp_references() end";
+          action = "<cmd>lua Snacks.picker.lsp_references()<CR>";
           options.desc = "References";
         }
         {
           mode = "n";
-          key = "gI";
-          action.__raw = "function() Snacks.picker.lsp_implementations() end";
-          options.desc = "Goto Implementation";
-        }
-        {
-          mode = "n";
           key = "gy";
-          action.__raw = "function() Snacks.picker.lsp_type_definitions() end";
+          action = "<cmd>lua Snacks.picker.lsp_type_definitions()<CR>";
           options.desc = "Goto T[y]pe Definition";
         }
         {
           mode = "n";
           key = "<leader>ss";
-          action.__raw = "function() Snacks.picker.lsp_symbols() end";
+          action = "<cmd>lua Snacks.picker.lsp_symbols()<CR>";
           options.desc = "LSP Symbols";
         }
         {
           mode = "n";
           key = "<leader>sS";
-          action.__raw = "function() Snacks.picker.lsp_workspace_symbols() end";
+          action = "<cmd>lua Snacks.picker.lsp_workspace_symbols()<CR>";
           options.desc = "LSP Workspace Symbols";
+        }
+        {
+          mode = "n";
+          key = "<leader>th";
+          action = "<cmd>lua vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())<CR>";
+          options.desc = "[T]oggle Inlay [H]ints";
         }
       ];
     };
@@ -160,5 +141,7 @@
     typescript-language-server
     nixd
     nixpkgs-fmt
+    wl-clipboard
+    xsel
   ];
 }

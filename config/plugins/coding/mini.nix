@@ -24,11 +24,13 @@
       };
       comment = {
         options = {
-          custom_commentstring.__raw = ''
-            function()
-              return require("ts_context_commentstring.internal").calculate_commentstring() or vim.bo.commentstring
-            end
-          '';
+          custom_commentstring.__raw =
+            # Lua
+            ''
+              function()
+                return require("ts_context_commentstring.internal").calculate_commentstring() or vim.bo.commentstring
+              end
+            '';
         };
       };
     };

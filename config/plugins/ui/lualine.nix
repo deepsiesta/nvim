@@ -25,16 +25,20 @@
         ];
         lualine_x = [
           {
-            __unkeyed-1.__raw = ''
-              function()
-                return require("noice").api.status.command.get()
-              end
-            '';
-            cond.__raw = ''
-              function()
-                return package.loaded["noice"] and require("noice").api.status.command.has()
-              end
-            '';
+            __unkeyed-1.__raw =
+              # Lua
+              ''
+                function()
+                  return require("noice").api.status.command.get()
+                end
+              '';
+            cond.__raw =
+              # Lua
+              ''
+                function()
+                  return package.loaded["noice"] and require("noice").api.status.command.has()
+                end
+              '';
             color = {fg = "#ff9e64";};
           }
         ];

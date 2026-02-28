@@ -16,11 +16,13 @@
 
   autoCmd = [
     {
-      callback.__raw = ''
-        function()
-          require('lint').try_lint()
-        end
-      '';
+      callback.__raw =
+        # Lua
+        ''
+          function()
+            require('lint').try_lint()
+          end
+        '';
       group = "lint";
       event = [
         "BufEnter"

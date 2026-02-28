@@ -5,10 +5,6 @@
     mouse = "a";
     showmode = false;
 
-    clipboard = {
-      register = "unnamedplus";
-    };
-
     breakindent = true;
     undofile = true;
     ignorecase = true;
@@ -28,7 +24,9 @@
     splitbelow = true;
 
     list = true;
-    listchars.__raw = "{ tab = '» ', trail = '·', nbsp = '␣' }";
+    listchars.__raw =
+      # Lua
+      "{ tab = '» ', trail = '·', nbsp = '␣' }";
 
     inccommand = "split";
     cursorline = true;
