@@ -1,4 +1,8 @@
 {pkgs, ...}: {
+  diagnostic.settings = {
+    virtual_text = true;
+  };
+
   plugins.lsp = {
     enable = true;
     inlayHints = true;
