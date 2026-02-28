@@ -1,4 +1,12 @@
 {
+  clipboard = {
+    register = "unnamedplus";
+    providers = {
+      wl-copy.enable = true;
+      xsel.enable = true;
+    };
+  };
+
   opts = {
     number = true;
     relativenumber = true;

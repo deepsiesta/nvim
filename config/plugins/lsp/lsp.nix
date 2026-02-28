@@ -3,14 +3,6 @@
     virtual_text = true;
   };
 
-  clipboard = {
-    register = "unnamedplus";
-    providers = {
-      wl-copy.enable = true;
-      xsel.enable = true;
-    };
-  };
-
   autoGroups = {
     "kickstart-lsp-attach" = {
       clear = true;
