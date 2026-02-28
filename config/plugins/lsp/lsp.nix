@@ -143,5 +143,6 @@
     nixpkgs-fmt
     wl-clipboard
     xsel
+    lazygit
   ];
 }

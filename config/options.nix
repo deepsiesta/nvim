@@ -24,9 +24,11 @@
     splitbelow = true;
 
     list = true;
-    listchars.__raw =
-      # Lua
-      "{ tab = '» ', trail = '·', nbsp = '␣' }";
+    listchars = {
+      tab = "» ";
+      trail = "·";
+      nbsp = "␣";
+    };
 
     inccommand = "split";
     cursorline = true;

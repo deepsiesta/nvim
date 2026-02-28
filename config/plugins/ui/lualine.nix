@@ -24,25 +24,20 @@
           }
         ];
         lualine_x = [
+          # Noice status components
           {
-            __unkeyed-1.__raw =
-              # Lua
-              ''
-                function()
-                  return require("noice").api.status.command.get()
-                end
-              '';
-            cond.__raw =
-              # Lua
-              ''
-                function()
-                  return package.loaded["noice"] and require("noice").api.status.command.has()
-                end
-              '';
+            __unkeyed-1 = "noice_command";
             color = {fg = "#ff9e64";};
           }
+          {
+            __unkeyed-1 = "noice_mode";
+            color = {fg = "#ff9e64";};
+          }
+          "encoding"
+          "fileformat"
+          "filetype"
         ];
-        lualine_y = ["encoding" "fileformat" "filetype"];
+        lualine_y = ["progress"];
         lualine_z = ["location"];
       };
     };

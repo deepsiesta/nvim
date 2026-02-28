@@ -13,14 +13,7 @@
     {
       event = "VimEnter";
       desc = "Remove cursor highlight background and set indent guide color";
-      callback.__raw =
-        # Lua
-        ''
-          function()
-            vim.cmd("highlight CursorLine guibg=NONE")
-            vim.cmd("highlight! link SnacksIndent NonText")
-          end
-        '';
+      command = "highlight CursorLine guibg=NONE | highlight! link SnacksIndent NonText";
     }
   ];
 }
