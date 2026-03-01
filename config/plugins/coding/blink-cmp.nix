@@ -13,8 +13,12 @@
         documentation = {
           auto_show = true;
           auto_show_delay_ms = 200;
+          window.border = "single";
         };
-        menu.draw.treesitter = ["lsp"];
+        menu = {
+          draw.treesitter = ["lsp"];
+          border = "single";
+        };
       };
 
       sources = {
@@ -29,6 +33,7 @@
 
       signature = {
         enabled = true;
+        window.border = "single";
       };
     };
   };

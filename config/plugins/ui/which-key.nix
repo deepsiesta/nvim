@@ -2,6 +2,7 @@
   plugins.which-key = {
     enable = true;
     settings = {
+      win.border = "single";
       spec = [
         {
           __unkeyed-1 = "<leader>c";

@@ -1,6 +1,7 @@
 {pkgs, ...}: {
   diagnostic.settings = {
     virtual_text = true;
+    float.border = "single";
   };
 
   autoGroups = {

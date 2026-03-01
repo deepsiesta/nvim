@@ -80,6 +80,7 @@
         };
       };
       explorer.enabled = true;
+      styles.default.border = "single";
       gitbrowse.enabled = true;
       input.enabled = true;
       lazygit.enabled = true;
