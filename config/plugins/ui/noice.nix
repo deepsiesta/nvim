@@ -28,7 +28,7 @@
         };
         popupmenu = {
           position = {
-            row = "70%";
+            row = "60%";
             col = "50%";
           };
           border = {
