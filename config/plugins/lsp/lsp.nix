@@ -4,40 +4,34 @@
     float.border = "single";
   };
 
-  autoGroups = {
-    "kickstart-lsp-attach" = {
-      clear = true;
-    };
-  };
-
-  autoCmd = [
-    {
-      event = ["CursorHold" "CursorHoldI"];
-      group = "kickstart-lsp-attach";
-      callback.__raw =
-        # Lua
-        ''
-          function()
-            vim.lsp.buf.document_highlight()
-          end
-        '';
-    }
-    {
-      event = ["CursorMoved" "CursorMovedI"];
-      group = "kickstart-lsp-attach";
-      callback.__raw =
-        # Lua
-        ''
-          function()
-            vim.lsp.buf.clear_references()
-          end
-        '';
-    }
-  ];
-
   plugins.lsp = {
     enable = true;
     inlayHints = true;
+
+    onAttach = ''
+      if client.supports_method('textDocument/documentHighlight') then
+        local highlight_augroup = vim.api.nvim_create_augroup('lsp-highlight', { clear = false })
+        vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+          buffer = bufnr,
+          group = highlight_augroup,
+          callback = vim.lsp.buf.document_highlight,
+        })
+
+        vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
+          buffer = bufnr,
+          group = highlight_augroup,
+          callback = vim.lsp.buf.clear_references,
+        })
+
+        vim.api.nvim_create_autocmd('LspDetach', {
+          group = vim.api.nvim_create_augroup('lsp-detach', { clear = true }),
+          callback = function(event2)
+            vim.lsp.buf.clear_references()
+            vim.api.nvim_clear_autocmds { group = 'lsp-highlight', buffer = event2.buf }
+          end,
+        })
+      end
+    '';
 
     servers = {
       ty.enable = true;
@@ -137,5 +131,6 @@
     wl-clipboard
     xsel
     lazygit
+    ty
   ];
 }
