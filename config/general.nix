@@ -42,7 +42,7 @@
     cursorline = true;
     scrolloff = 10;
     hlsearch = true;
-    conceallevel = 2;
+    conceallevel = 0;
   };
 
   globals = {
