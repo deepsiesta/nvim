@@ -1,4 +1,4 @@
-{
+{pkgs, ...}: {
   plugins.snacks = {
     enable = true;
     settings = {
@@ -65,12 +65,6 @@
               action = ":lua Snacks.dashboard.pick('oldfiles')";
             }
             {
-              icon = " ";
-              key = "c";
-              desc = "Config";
-              action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})";
-            }
-            {
               icon = " ";
               key = "q";
               desc = "Quit";
@@ -115,6 +109,11 @@
       };
     };
   };
+
+  extraPackages = with pkgs; [
+    fd
+    ripgrep
+  ];
 
   keymaps = [
     # Top level
@@ -203,12 +202,6 @@
       key = "<leader>s.";
       action = "<cmd>lua Snacks.picker.recent()<CR>";
       options.desc = "[S]earch Recent Files ('.' for repeat)";
-    }
-    {
-      mode = "n";
-      key = "<leader>sn";
-      action = "<cmd>lua Snacks.picker.files({ cwd = vim.fn.stdpath('config') })<CR>";
-      options.desc = "[S]earch [N]eovim files";
     }
 
     # [G]it
