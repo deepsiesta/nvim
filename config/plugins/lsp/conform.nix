@@ -41,5 +41,7 @@
     alejandra
     prettierd
     ruff
+    texlivePackages.latexindent
+    nodePackages.markdownlint-cli
   ];
 }
