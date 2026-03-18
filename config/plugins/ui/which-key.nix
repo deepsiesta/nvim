@@ -44,6 +44,10 @@
           __unkeyed-1 = "<leader>b";
           group = "[B]uffer";
         }
+        {
+          __unkeyed-1 = "<leader>N";
+          group = "[N]eorg";
+        }
       ];
     };
   };
