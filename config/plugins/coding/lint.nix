@@ -7,6 +7,16 @@
       markdown = ["markdownlint"];
     };
 
+    linters = {
+      markdownlint = {
+        args = [
+          "--stdin"
+          "--disable"
+          "MD013"
+        ];
+      };
+    };
+
     autoCmd = {
       callback.__raw =
         # Lua
