@@ -42,6 +42,6 @@
     prettierd
     ruff
     texlivePackages.latexindent
-    nodePackages.markdownlint-cli
+    markdownlint-cli
   ];
 }

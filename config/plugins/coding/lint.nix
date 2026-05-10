@@ -67,6 +67,6 @@
   };
 
   extraPackages = with pkgs; [
-    nodePackages.markdownlint-cli
+    markdownlint-cli
   ];
 }
