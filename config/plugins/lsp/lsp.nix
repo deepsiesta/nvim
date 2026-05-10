@@ -9,7 +9,7 @@
     inlayHints = true;
 
     onAttach = ''
-      if client.supports_method('textDocument/documentHighlight') then
+      if client:supports_method('textDocument/documentHighlight') then
         local highlight_augroup = vim.api.nvim_create_augroup('lsp-highlight', { clear = false })
         vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
           buffer = bufnr,

@@ -12,14 +12,14 @@
         nix = ["alejandra"];
         rust = ["rustfmt"];
         python = ["ruff_format"];
-        javascript = ["prettierd" "prettier"];
-        typescript = ["prettierd" "prettier"];
-        javascriptreact = ["prettierd" "prettier"];
-        typescriptreact = ["prettierd" "prettier"];
-        css = ["prettierd" "prettier"];
-        html = ["prettierd" "prettier"];
+        javascript = ["prettierd"];
+        typescript = ["prettierd"];
+        javascriptreact = ["prettierd"];
+        typescriptreact = ["prettierd"];
+        css = ["prettierd"];
+        html = ["prettierd"];
         json = ["jq"];
-        yaml = ["prettierd" "prettier"];
+        yaml = ["prettierd"];
         markdown = ["markdownlint"];
         latex = ["latexindent"];
       };
@@ -40,6 +40,7 @@
     jq
     alejandra
     prettierd
+    rustfmt
     ruff
     texlivePackages.latexindent
     markdownlint-cli

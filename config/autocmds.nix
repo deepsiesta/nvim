@@ -8,7 +8,7 @@
       event = ["TextYankPost"];
       desc = "Highlight when yanking (copying) text";
       group = "highlight-yank";
-      callback.__raw = "vim.highlight.on_yank";
+      callback.__raw = "vim.hl.on_yank";
     }
     {
       event = "FileType";
