@@ -15,20 +15,6 @@
             indent = 2;
             padding = 1;
           }
-          {
-            icon = " ";
-            title = "Recent Files";
-            section = "recent_files";
-            indent = 2;
-            padding = 1;
-          }
-          {
-            icon = " ";
-            title = "Projects";
-            section = "projects";
-            indent = 2;
-            padding = 1;
-          }
         ];
         preset = {
           header = ''
@@ -62,12 +48,13 @@
             ⠀⣿⣛⣻⣿⡿⠿⠟⠗⠶⠶⠶⠶⠤⠤⢤⠤⡤⢤⣤⣤⣤⣤⣄⣀⣀⣀⣀⣀⣀⣀⣀⣣⢹⣷⣶⣿⣿⣦⣴⣟⣛⣯⣤⣿⣿⣿⣿⣿⣷⣌⣿⣿⣿⣿⣿⣿⣿⣤⣤⣤⣤⣤⣤⣄
             ⠀⠉⠙⠛⠛⠛⠛⠛⠻⠿⠿⠿⠷⠶⠶⢶⣶⣶⣶⣶⣤⣤⣤⣤⣤⣥⣬⣭⣭⣉⣩⣍⣙⣏⣉⣏⣽⣶⣶⣶⣤⣤⣬⣤⣤⣾⣿⠶⠾⠿⠿⠿⠿⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠃
             ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠉⠉⠉⠉⠉⠛⠛⠛⠛⠛⠛⠋⠉⠉⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-            ███╗   ██╗██╗██╗  ██╗██╗   ██╗██╗███╗   ███╗
-            ████╗  ██║██║╚██╗██╔╝██║   ██║██║████╗ ████║
-            ██╔██╗ ██║██║ ╚███╔╝ ██║   ██║██║██╔████╔██║
-            ██║╚██╗██║██║ ██╔██╗ ╚██╗ ██╔╝██║██║╚██╔╝██║
-            ██║ ╚████║██║██╔╝ ██╗ ╚████╔╝ ██║██║ ╚═╝ ██║
-            ╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝  ╚═══╝  ╚═╝╚═╝     ╚═╝
+
+             ███╗   ██╗██╗██╗  ██╗██╗   ██╗██╗███╗   ███╗
+             ████╗  ██║██║╚██╗██╔╝██║   ██║██║████╗ ████║
+             ██╔██╗ ██║██║ ╚███╔╝ ██║   ██║██║██╔████╔██║
+             ██║╚██╗██║██║ ██╔██╗ ╚██╗ ██╔╝██║██║╚██╔╝██║
+             ██║ ╚████║██║██╔╝ ██╗ ╚████╔╝ ██║██║ ╚═╝ ██║
+             ╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝  ╚═══╝  ╚═╝╚═╝     ╚═╝
           '';
           keys = [
             {
@@ -81,6 +68,12 @@
               key = "r";
               desc = "Recent Files";
               action = ":lua Snacks.dashboard.pick('oldfiles')";
+            }
+            {
+              icon = " ";
+              key = "p";
+              desc = "Recent Projects";
+              action = ":lua Snacks.dashboard.pick('projects')";
             }
             {
               icon = " ";
@@ -220,6 +213,12 @@
       key = "<leader>s.";
       action = "<cmd>lua Snacks.picker.recent()<CR>";
       options.desc = "[S]earch Recent Files ('.' for repeat)";
+    }
+    {
+      mode = "n";
+      key = "<leader>sp";
+      action = "<cmd>lua Snacks.picker.projects()<CR>";
+      options.desc = "[S]earch Recent [P]rojects";
     }
 
     # [G]it
