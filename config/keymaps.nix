@@ -8,7 +8,7 @@
     {
       mode = "t";
       key = "<Esc><Esc>";
-      action = "<C-\><C-n>";
+      action = "<C-\\><C-n>";
       options.desc = "Exit terminal mode";
     }
     {
