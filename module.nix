@@ -1,0 +1,103 @@
+{
+  wlib,
+  pkgs,
+  ...
+}: {
+  imports = [wlib.wrapperModules.neovim];
+
+  settings.config_directory = ./config;
+
+  hosts = {
+    node.nvim-host.enable = false;
+    perl.nvim-host.enable = false;
+  };
+
+  specs = {
+    ui = with pkgs.vimPlugins; [
+      tokyonight-nvim
+      nvim-web-devicons
+      snacks-nvim
+      noice-nvim
+      lualine-nvim
+      which-key-nvim
+      gitsigns-nvim
+      render-markdown-nvim
+    ];
+
+    coding = with pkgs.vimPlugins; [
+      blink-cmp
+      friendly-snippets
+      nvim-lint
+      mini-nvim
+      nvim-ts-context-commentstring
+      nvim-treesitter.withAllGrammars
+      nvim-treesitter-textobjects
+      nvim-ts-autotag
+      todo-comments-nvim
+      vim-sleuth
+      vim-nix
+      nix-develop-nvim
+      vimtex
+    ];
+
+    lsp = with pkgs.vimPlugins; [
+      nvim-lspconfig
+      fidget-nvim
+      typescript-tools-nvim
+      luvit-meta
+      conform-nvim
+    ];
+  };
+
+  runtimePkgs = with pkgs; [
+    # Clipboard & core deps
+    wl-clipboard
+    xsel
+    fd
+    ripgrep
+    git
+    lazygit
+    jq
+
+    # Nix
+    nixd
+    alejandra
+    nixpkgs-fmt
+
+    # Lua
+    lua-language-server
+    stylua
+
+    # Rust
+    cargo
+    rustc
+    rust-analyzer
+    rustfmt
+
+    # Python
+    ty
+    ruff
+
+    # JS/TS & Web
+    nodejs
+    typescript
+    typescript-language-server
+    vscode-langservers-extracted
+    tailwindcss-language-server
+    prettierd
+
+    # Nushell
+    nushell
+
+    # Markdown
+    markdownlint-cli
+    python3Packages.pylatexenc
+
+    # LaTeX
+    pstree
+    xdotool
+    texliveSmall
+    texlivePackages.latexmk
+    texlivePackages.latexindent
+  ];
+}

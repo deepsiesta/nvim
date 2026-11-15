@@ -1,0 +1,27 @@
+require("conform").setup({
+  format_on_save = {
+    lsp_fallback = false,
+    timeout_ms = 1000,
+  },
+  notify_on_error = false,
+  formatters_by_ft = {
+    lua = { "stylua" },
+    nix = { "alejandra" },
+    rust = { "rustfmt" },
+    python = { "ruff_format" },
+    javascript = { "prettierd" },
+    typescript = { "prettierd" },
+    javascriptreact = { "prettierd" },
+    typescriptreact = { "prettierd" },
+    css = { "prettierd" },
+    html = { "prettierd" },
+    json = { "jq" },
+    yaml = { "prettierd" },
+    markdown = { "markdownlint" },
+    latex = { "latexindent" },
+  },
+})
+
+vim.keymap.set({ "n", "v" }, "<leader>cf", function()
+  require("conform").format({ async = true, lsp_fallback = true })
+end, { desc = "Format buffer" })
