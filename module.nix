@@ -13,40 +13,48 @@
   };
 
   specs = {
-    ui = with pkgs.vimPlugins; [
+    core = with pkgs.vimPlugins; [
+      lze
+      lzextras
       tokyonight-nvim
       nvim-web-devicons
       snacks-nvim
       noice-nvim
       lualine-nvim
-      which-key-nvim
-      gitsigns-nvim
-      render-markdown-nvim
-    ];
-
-    coding = with pkgs.vimPlugins; [
-      blink-cmp
-      friendly-snippets
-      nvim-lint
-      mini-nvim
-      nvim-ts-context-commentstring
       nvim-treesitter.withAllGrammars
-      nvim-treesitter-textobjects
-      nvim-ts-autotag
-      todo-comments-nvim
       vim-sleuth
-      vim-nix
-      nix-develop-nvim
-      vimtex
     ];
 
-    lsp = with pkgs.vimPlugins; [
-      nvim-lspconfig
-      fidget-nvim
-      typescript-tools-nvim
-      luvit-meta
-      conform-nvim
-    ];
+    lazy = {
+      lazy = true;
+      pluginDeps = "lazy";
+      data = with pkgs.vimPlugins; [
+        # UI
+        which-key-nvim
+        gitsigns-nvim
+        render-markdown-nvim
+
+        # Coding
+        blink-cmp
+        friendly-snippets
+        nvim-lint
+        mini-nvim
+        nvim-ts-context-commentstring
+        nvim-treesitter-textobjects
+        nvim-ts-autotag
+        todo-comments-nvim
+        vim-nix
+        nix-develop-nvim
+        vimtex
+
+        # LSP & Formatting
+        nvim-lspconfig
+        fidget-nvim
+        typescript-tools-nvim
+        luvit-meta
+        conform-nvim
+      ];
+    };
   };
 
   runtimePkgs = with pkgs; [

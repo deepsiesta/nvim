@@ -69,34 +69,58 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end,
 })
 
-local capabilities = require("blink.cmp").get_lsp_capabilities()
-
-vim.lsp.config("*", {
-  capabilities = capabilities,
-})
-
-vim.lsp.config("lua_ls", {
-  settings = {
-    Lua = {
-      completion = {
-        callSnippet = "Replace",
+return {
+  {
+    "luvit-meta",
+    dep_of = { "nvim-lspconfig" },
+  },
+  {
+    "nvim-lspconfig",
+    on_require = { "lspconfig" },
+    dep_of = { "typescript-tools.nvim" },
+    after = function()
+      vim.lsp.config("*", {
+        capabilities = require("blink.cmp").get_lsp_capabilities(),
+      })
+    end,
+    lsp = function(plugin)
+      vim.lsp.config(plugin.name, plugin.lsp or {})
+      vim.lsp.enable(plugin.name)
+    end,
+  },
+  {
+    "fidget.nvim",
+    event = "LspAttach",
+    after = function()
+      require("fidget").setup({})
+    end,
+  },
+  {
+    "typescript-tools.nvim",
+    ft = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+    after = function()
+      require("typescript-tools").setup({})
+    end,
+  },
+  { "ty", lsp = {} },
+  { "rust_analyzer", lsp = {} },
+  { "jsonls", lsp = {} },
+  { "html", lsp = {} },
+  { "eslint", lsp = {} },
+  { "cssls", lsp = {} },
+  { "tailwindcss", lsp = {} },
+  { "nushell", lsp = {} },
+  { "nixd", lsp = {} },
+  {
+    "lua_ls",
+    lsp = {
+      settings = {
+        Lua = {
+          completion = {
+            callSnippet = "Replace",
+          },
+        },
       },
     },
   },
-})
-
-vim.lsp.enable({
-  "ty",
-  "rust_analyzer",
-  "jsonls",
-  "html",
-  "eslint",
-  "cssls",
-  "tailwindcss",
-  "nushell",
-  "nixd",
-  "lua_ls",
-})
-
-require("fidget").setup({})
-require("typescript-tools").setup({})
+}
