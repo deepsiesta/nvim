@@ -15,12 +15,13 @@ return {
       "MD013",
     }
 
+    local efm_parser = require("lint.parser").from_errorformat("stdin:%l:%c %m,stdin:%l %m")
+
     -- Make MD040 errors visible
     -- MD040 (code blocks should have a language id) flags on the opening triple backticks
     -- This is hidden by `conceallevel=2`, so we move the warning one line down
     lint.linters.markdownlint.parser = function(output, bufnr)
-      local parser = require("lint.parser").from_errorformat("stdin:%l:%c %m,stdin:%l %m")
-      local diagnostics = parser(output, bufnr)
+      local diagnostics = efm_parser(output, bufnr)
 
       for _, diag in ipairs(diagnostics) do
         if diag.message:find("MD040") then
@@ -46,6 +47,7 @@ return {
     end
 
     vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
+      group = vim.api.nvim_create_augroup("nvim-lint", { clear = true }),
       callback = function()
         lint.try_lint()
       end,

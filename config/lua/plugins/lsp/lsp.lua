@@ -1,9 +1,9 @@
 vim.diagnostic.config({
   virtual_text = true,
-  float = { border = "single" },
 })
 
 vim.lsp.inlay_hint.enable(true)
+vim.lsp.linked_editing_range.enable(true)
 
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
@@ -27,19 +27,29 @@ vim.api.nvim_create_autocmd("LspAttach", {
     map("K", vim.lsp.buf.hover, "Hover documentation")
     map("gD", vim.lsp.buf.declaration, "Goto declaration")
     map("gK", vim.lsp.buf.signature_help, "Signature help")
-    map("gI", vim.lsp.buf.implementation, "Goto implementation")
 
     map("<leader>cl", "<cmd>checkhealth vim.lsp<CR>", "LSP Info")
-    map("gd", "<cmd>lua Snacks.picker.lsp_definitions()<CR>", "Goto Definition")
-    map("gr", "<cmd>lua Snacks.picker.lsp_references()<CR>", "References")
-    map("gy", "<cmd>lua Snacks.picker.lsp_type_definitions()<CR>", "Goto T[y]pe Definition")
-    map("<leader>cs", "<cmd>lua Snacks.picker.lsp_symbols()<CR>", "LSP Symbols")
-    map("<leader>cS", "<cmd>lua Snacks.picker.lsp_workspace_symbols()<CR>", "LSP Workspace Symbols")
-    map(
-      "<leader>th",
-      "<cmd>lua vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())<CR>",
-      "[T]oggle Inlay [H]ints"
-    )
+    map("gd", function()
+      Snacks.picker.lsp_definitions()
+    end, "Goto Definition")
+    map("grr", function()
+      Snacks.picker.lsp_references()
+    end, "References")
+    map("gri", function()
+      Snacks.picker.lsp_implementations()
+    end, "Goto Implementation")
+    map("grt", function()
+      Snacks.picker.lsp_type_definitions()
+    end, "Goto Type Definition")
+    map("<leader>cs", function()
+      Snacks.picker.lsp_symbols()
+    end, "LSP Symbols")
+    map("<leader>cS", function()
+      Snacks.picker.lsp_workspace_symbols()
+    end, "LSP Workspace Symbols")
+    map("<leader>th", function()
+      vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+    end, "[T]oggle Inlay [H]ints")
   end,
 })
 
@@ -66,7 +76,6 @@ return {
   },
   {
     "nvim-lspconfig",
-    on_require = { "lspconfig" },
     dep_of = { "typescript-tools.nvim" },
     after = function()
       vim.lsp.config("*", {

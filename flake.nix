@@ -90,7 +90,6 @@
                 { "nvim-treesitter-textobjects", "nvim-treesitter-textobjects" },
                 { "nvim-ts-autotag", "nvim-ts-autotag" },
                 { "todo-comments.nvim", "todo-comments" },
-                { "nvim-lspconfig", "lspconfig" },
                 { "fidget.nvim", "fidget" },
                 { "typescript-tools.nvim", "typescript-tools" },
                 { "lazydev.nvim", "lazydev" },
@@ -105,6 +104,11 @@
                 return orig_notify(msg, level, opts)
               end
               local lze = require("lze")
+              lze.trigger_load("nvim-lspconfig")
+              if #vim.api.nvim_get_runtime_file("lsp/lua_ls.lua", false) == 0 then
+                io.stderr:write("Failed to load nvim-lspconfig runtime files\n")
+                os.exit(1)
+              end
               for _, entry in ipairs(lazy_plugins) do
                 local plugin_name, mod = entry[1], entry[2]
                 lze.trigger_load(plugin_name)
