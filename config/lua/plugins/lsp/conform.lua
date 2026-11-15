@@ -6,7 +6,7 @@ return {
     {
       "<leader>cf",
       function()
-        require("conform").format({ async = true, lsp_fallback = true })
+        require("conform").format({ async = true, lsp_format = "fallback" })
       end,
       mode = { "n", "v" },
       desc = "Format buffer",
@@ -15,7 +15,7 @@ return {
   after = function()
     require("conform").setup({
       format_on_save = {
-        lsp_fallback = false,
+        lsp_format = "never",
         timeout_ms = 1000,
       },
       notify_on_error = false,
@@ -33,7 +33,8 @@ return {
         json = { "jq" },
         yaml = { "prettierd" },
         markdown = { "markdownlint" },
-        latex = { "latexindent" },
+        tex = { "latexindent" },
+        plaintex = { "latexindent" },
       },
     })
   end,

@@ -24,7 +24,6 @@ require("config.autocmds")
 
 -- Eager UI & core plugins
 require("plugins.ui.colorscheme")
-require("plugins.ui.devicons")
 require("plugins.ui.snacks")
 require("plugins.ui.noice")
 require("plugins.ui.lualine")

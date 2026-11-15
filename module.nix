@@ -51,6 +51,7 @@
         nvim-lspconfig
         fidget-nvim
         typescript-tools-nvim
+        lazydev-nvim
         luvit-meta
         conform-nvim
       ];
@@ -60,7 +61,6 @@
   runtimePkgs = with pkgs; [
     # Clipboard & core deps
     wl-clipboard
-    xsel
     fd
     ripgrep
     git
@@ -70,7 +70,6 @@
     # Nix
     nixd
     alejandra
-    nixpkgs-fmt
 
     # Lua
     lua-language-server
@@ -89,7 +88,6 @@
     # JS/TS & Web
     nodejs
     typescript
-    typescript-language-server
     vscode-langservers-extracted
     tailwindcss-language-server
     prettierd

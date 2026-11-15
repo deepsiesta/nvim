@@ -8,33 +8,7 @@ vim.lsp.inlay_hint.enable(true)
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
   callback = function(event)
-    local client = vim.lsp.get_client_by_id(event.data.client_id)
     local bufnr = event.buf
-
-    if client and client:supports_method("textDocument/documentHighlight") then
-      local highlight_augroup = vim.api.nvim_create_augroup("lsp-highlight", { clear = false })
-      vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-        buffer = bufnr,
-        group = highlight_augroup,
-        callback = vim.lsp.buf.document_highlight,
-      })
-
-      vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
-        buffer = bufnr,
-        group = highlight_augroup,
-        callback = vim.lsp.buf.clear_references,
-      })
-
-      vim.api.nvim_create_autocmd("LspDetach", {
-        buffer = bufnr,
-        group = vim.api.nvim_create_augroup("lsp-detach", { clear = false }),
-        once = true,
-        callback = function(event2)
-          vim.lsp.buf.clear_references()
-          vim.api.nvim_clear_autocmds({ group = "lsp-highlight", buffer = event2.buf })
-        end,
-      })
-    end
 
     local map = function(keys, func, desc)
       vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
@@ -55,12 +29,12 @@ vim.api.nvim_create_autocmd("LspAttach", {
     map("gK", vim.lsp.buf.signature_help, "Signature help")
     map("gI", vim.lsp.buf.implementation, "Goto implementation")
 
-    map("<leader>cl", "<cmd>LspInfo<cr>", "LSP Info")
+    map("<leader>cl", "<cmd>checkhealth vim.lsp<CR>", "LSP Info")
     map("gd", "<cmd>lua Snacks.picker.lsp_definitions()<CR>", "Goto Definition")
     map("gr", "<cmd>lua Snacks.picker.lsp_references()<CR>", "References")
     map("gy", "<cmd>lua Snacks.picker.lsp_type_definitions()<CR>", "Goto T[y]pe Definition")
-    map("<leader>ss", "<cmd>lua Snacks.picker.lsp_symbols()<CR>", "LSP Symbols")
-    map("<leader>sS", "<cmd>lua Snacks.picker.lsp_workspace_symbols()<CR>", "LSP Workspace Symbols")
+    map("<leader>cs", "<cmd>lua Snacks.picker.lsp_symbols()<CR>", "LSP Symbols")
+    map("<leader>cS", "<cmd>lua Snacks.picker.lsp_workspace_symbols()<CR>", "LSP Workspace Symbols")
     map(
       "<leader>th",
       "<cmd>lua vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())<CR>",
@@ -72,7 +46,23 @@ vim.api.nvim_create_autocmd("LspAttach", {
 return {
   {
     "luvit-meta",
-    dep_of = { "nvim-lspconfig" },
+    dep_of = { "lazydev.nvim" },
+  },
+  {
+    "lazydev.nvim",
+    ft = "lua",
+    cmd = "LazyDev",
+    after = function()
+      local lib_dir = vim.api.nvim_get_runtime_file("library", false)[1]
+      require("lazydev").setup({
+        integrations = {
+          cmp = false,
+        },
+        library = lib_dir and {
+          { path = lib_dir, words = { "vim%.uv" } },
+        } or {},
+      })
+    end,
   },
   {
     "nvim-lspconfig",

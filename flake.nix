@@ -93,6 +93,7 @@
                 { "nvim-lspconfig", "lspconfig" },
                 { "fidget.nvim", "fidget" },
                 { "typescript-tools.nvim", "typescript-tools" },
+                { "lazydev.nvim", "lazydev" },
                 { "conform.nvim", "conform" },
               }
               local orig_notify = vim.notify

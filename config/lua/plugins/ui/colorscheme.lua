@@ -6,6 +6,10 @@ require("tokyonight").setup({
     floats = "transparent",
     keywords = { italic = false },
   },
+  on_highlights = function(hl)
+    hl.CursorLine = { bg = "NONE" }
+    hl.SnacksIndent = { link = "NonText" }
+  end,
 })
 
 vim.cmd.colorscheme("tokyonight")
