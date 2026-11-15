@@ -6,7 +6,6 @@ require("render-markdown").setup({
     },
   },
   anti_conceal = { enabled = true },
-  only_render_image_at_cursor = true,
   pipe_table = { style = "full" },
   sign = {
     enabled = true,
